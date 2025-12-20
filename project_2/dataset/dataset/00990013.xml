@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ASRecord Model="AS-ALISO" Rev="1">
+	<Firmware>1.0.1</Firmware>
+	<SN>23130099</SN>
+	<Filename>00990013.wav</Filename>
+	<DateTime>04.06.2025 12:06:34</DateTime>
+	<Profile>AS-ALISO_0099</Profile>
+	<Duration>20.0 Sec</Duration>
+	<Samplerate>48000 Hz</Samplerate>
+	<Temperature>24 C</Temperature>
+	<BattVoltage>4.1 V</BattVoltage>
+	<GPS>
+		<Valid>yes</Valid>
+		<Position>53.24045 6.53649</Position>
+	</GPS>
+	<Microphone>
+		<WavTrackNo>1</WavTrackNo>
+		<ChannelNo>1</ChannelNo>
+		<HasTriggered>1</HasTriggered>
+		<Gain>+0 dB</Gain>
+	</Microphone>
+	<TrgSettings>
+		<PreTriggerTime>500</PreTriggerTime>
+		<MaxDuration>20000</MaxDuration>
+	</TrgSettings>
+	<TrgValues>
+		<Event>schedule</Event>
+	</TrgValues>
+</ASRecord>
