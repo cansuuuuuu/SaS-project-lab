@@ -1,6 +1,5 @@
-import wave
 import numpy as np
-import librosa
+import soundfile as sf
 
 """
 Class in charge of loading a individual files from the dataset.
@@ -36,10 +35,12 @@ class FileLoader:
         Returns:
             Nothing.
         """
-        data, sr = librosa.load(self._filepath, sr=None, mono=True)
+        data, sr = sf.read(self._filepath, dtype="float32")
+        if data.ndim > 1:
+            data = data.mean(axis=1)
         self._sample_rate = int(sr)
-        self._data = (data * 32767).astype(np.int16)
-    
+        self._data = data
+
     def get_sample_rate(self) -> int:
         """
         Function to get the sample rate of the audio file.
