@@ -1,5 +1,6 @@
 import wave
 import numpy as np
+import librosa
 
 """
 Class in charge of loading a individual files from the dataset.
@@ -20,17 +21,14 @@ class FileLoader:
         self._filepath = filepath
         self._sample_rate: int = 0
         self._data: np.ndarray = np.array([])
-        self._load_wav()
+        self._load_audio()
 
     
-    def _load_wav(self):
+    def _load_audio(self):
         """
-        Function for actually loading in the files.
-        It opens the WAV audio files using wave.open from wave library.
-        It then reads and stores the metadata (such as sample rate, width and channels).
-        It also stores the raw audio data and converts it into a Numpy array, and reshapes the
-        audio from stereo to mono. The conversion to mono preservers singal content for
-        time-domain analysis.
+        Function for loading audio files, supporting both WAV and MP3.
+        The "data" variable loaded by librosa is a Numpy floating point time series
+        which is normalized to the range of -1.0 to 1.0
 
         Args: 
             Nothing.
@@ -38,16 +36,9 @@ class FileLoader:
         Returns:
             Nothing.
         """
-        with wave.open(self._filepath, 'rb') as wav_file:
-            self._sample_rate = wav_file.getframerate()
-            n_channels = wav_file.getnchannels()
-            sample_width = wav_file.getsampwidth()
-            
-            frames = wav_file.readframes(wav_file.getnframes())
-            self._data = np.frombuffer(frames, dtype=np.int16)
-            
-            if n_channels > 1:
-                self._data = self._data.reshape(-1, n_channels).mean(axis=1)
+        data, sr = librosa.load(self._filepath, sr=None, mono=True)
+        self._sample_rate = int(sr)
+        self._data = (data * 32767).astype(np.int16)
     
     def get_sample_rate(self) -> int:
         """
@@ -63,12 +54,11 @@ class FileLoader:
     
     def get_data(self) -> np.ndarray:
         """
-        Returns the 16-bit audio sample as NumPY int16 array.
-        
+        Returns the floating pount time series of audio files     
         Args: 
             Nothing.
         
         Returns:
-            The audio sample as a NumPy array, also calculated in previous function.
+            The audio sample as the floating point time series in NumPy. 
         """
         return self._data.copy()

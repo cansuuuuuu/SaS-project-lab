@@ -4,8 +4,8 @@ from typing import List, Dict
 import numpy as np
 import pandas as pd
 
-from utils.load_file import FileLoader
-from utils.data_exploration import DataExploration
+from load_file import FileLoader
+from data_exploration import DataExploration
 
 """
 Class for structuring the audio files into a dataset, preparing for the pipeline.
