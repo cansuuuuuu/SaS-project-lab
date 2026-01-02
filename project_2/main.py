@@ -1,4 +1,4 @@
-from utils.dataset_loader import DatasetLoader
+from utils import DatasetLoader
 
 def main():
     root_dir = "dataset"
