@@ -4,6 +4,8 @@ import pandas as pd
 
 from load_file import FileLoader
 from data_exploration import DataExploration
+from fir_filter import FIRFilter
+
 
 """
 Class for structuring the audio files into a dataset, preparing for the pipeline.
@@ -22,6 +24,9 @@ class DatasetLoader:
         """
         self.root_dir = root_dir
         self.explorer = DataExploration()
+        self.filter = FIRFilter()
+        self.frequency_response = self.filter.define_highpass_filter(cutoff_freq = 800)
+
 
     def _list_files(self) -> List[str]:
         """
@@ -65,6 +70,8 @@ class DatasetLoader:
             max_samples = 5 * sr # limited to be able to process
             if data.size > max_samples:
                 data = data[:max_samples]
+
+            filtered_data = self.filter.filter(data, self.frequency_response)
 
             feats = self.explorer.explore(data, fs=sr)
 
