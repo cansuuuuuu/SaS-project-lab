@@ -1,5 +1,6 @@
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.preprocessing import StandardScaler
+import shap
 
 class BirdClassifier:
 
@@ -21,4 +22,11 @@ class BirdClassifier:
         X_scaled = self.scaler.transform(X)
         return self.model.predict(X_scaled)
 
-    # to be added here: evaluate
+    def explain(self, X: np.ndarray):
+        if not self.is_fitted:
+            raise ValueError("Fit first!")
+        X_scaled = self.scaler.transform(X)
+        explainer = shap.TreeExplainer(self.model)
+        shap_values = explainer.shap_values(X_scaled)
+        shap.summary_plot(shap_values, X_scaled, X, feature_names=self.feature_names, show=False)
+        return shap_values

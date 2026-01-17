@@ -31,6 +31,8 @@ def main():
     print("\nClassification Report:")
     print(classification_report(y_test, y_pred))
 
+    classifier.explain(X[:50])
+
     df.to_csv("project_1_features.csv", index=False)
     print("\nFeatures saved to project_1_features.csv")
 
