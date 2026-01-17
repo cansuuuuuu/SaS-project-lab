@@ -11,18 +11,19 @@ class FIRFilter:
         a low pass filter
         :param order: the order (length) of the filter
         :param cutoff_freq: the cutoff frequency
-\        :return: the coefficients
+        :return: the windowed filter coefficients
         """
         coefs = np.zeros(order)
         angular_cutoff_freq = cutoff_freq * 2 * np.pi
         for i in range(order):
             coefs[i] = np.sinc((i - order) * angular_cutoff_freq ) * (-1) ** i
-        return coefs
+        return coefs * np.hamming(order)
 
     def filter(self, data : np.ndarray, coefs : np.ndarray) -> np.ndarray:
         """
-        Filters the data using an FIR filter, it does so by doing a convolution between the coefficients and the data
-        :param data: the data to be filtered
+        Filters the sound file using an FIR filter, it does so by doing a convolution between the coefficients and the
+        sound data
+        :param data: data to be filtered
         :param coefs: the filter coefficients
         """
 
