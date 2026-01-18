@@ -1,14 +1,14 @@
 import numpy as np
 
-"""
-Class for the implementation of a fast Fourier transform algorithm.
-"""
 class FastFourierTransform:
-
+    """
+    Class for the implementation of a fast Fourier transform algorithm.
+    """
     def _recursive_dft(self,sequence: np.ndarray) -> np.ndarray:
         """
-        Recursive discrete Fourier transform for the FFT. Recursively splits a time series into even and odd points of
-        the time series before recombining them according to the Fourier transform equation.
+        Recursive discrete Fourier transform for the FFT. Recursively splits a time series 
+        into even and odd points of the time series before recombining them according to the 
+        Fourier transform equation.
         :param sequence (numpy ndarray): discrete time series
         :return:  frequency domain representation of the input sequence
         """
@@ -36,9 +36,9 @@ class FastFourierTransform:
 
     def fft(self, data: np.ndarray) -> np.ndarray:
         """
-        Dispatcher for the FFT algorithm. It ensures that the input sequence has a length of a power of 2 by padding it
-        if it is not. Then calls the _recursive_dft function and returns the result.
-
+        Dispatcher for the FFT algorithm. It ensures that the input sequence has a length of a 
+        power of 2 by padding it if it is not. Then calls the _recursive_dft function 
+        and returns the result.
         :param data: (numpy ndarray) discrete time series
         :return: frequency domain representation of the input sequence
         """
@@ -49,4 +49,3 @@ class FastFourierTransform:
         else:
             padded_data = data
         return self._recursive_dft(padded_data)
-

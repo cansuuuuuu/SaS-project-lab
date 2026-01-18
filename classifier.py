@@ -11,23 +11,23 @@ class BirdClassifier:
         self.model = RandomForestClassifier(n_estimators=100, random_state=42)
         self.is_fitted = False
 
-    def fit(self, X, y):
-        X_scaled = self.scaler.fit_transform(X)
-        self.model.fit(X_scaled, y)
+    def fit(self, x, y):
+        x_scaled = self.scaler.fit_transform(x)
+        self.model.fit(x_scaled, y)
         self.is_fitted = True
         return self
 
-    def predict(self, X):
+    def predict(self, x):
         if not self.is_fitted:
             raise ValueError("Fit model first!")
-        X_scaled = self.scaler.transform(X)
-        return self.model.predict(X_scaled)
+        x_scaled = self.scaler.transform(x)
+        return self.model.predict(x_scaled)
 
-    def explain(self, X: np.ndarray):
+    def explain(self, x: np.ndarray):
         if not self.is_fitted:
             raise ValueError("Fit first!")
-        X_scaled = self.scaler.transform(X)
+        x_scaled = self.scaler.transform(x)
         explainer = shap.TreeExplainer(self.model)
-        shap_values = explainer.shap_values(X_scaled)
-        shap.summary_plot(shap_values, X_scaled, X, feature_names=self.feature_names, show=False)
+        shap_values = explainer.shap_values(x_scaled)
+        shap.summary_plot(shap_values, x_scaled, x, feature_names=self.feature_names, show=False)
         return shap_values

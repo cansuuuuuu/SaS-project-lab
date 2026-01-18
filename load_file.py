@@ -1,12 +1,12 @@
 import numpy as np
 import soundfile as sf
 
-"""
-Class in charge of loading a individual files from the dataset.
-It also returns any features of the sound file that are required by other classes, such as sample rate or amplitude.
-"""
 class FileLoader:
-
+    """
+    Class in charge of loading a individual files from the dataset.
+    It also returns any features of the sound file that are required by other classes, 
+    such as sample rate or amplitude.
+    """
     def __init__(self, filepath: str):
         """
         Initializer for the class.
@@ -22,7 +22,7 @@ class FileLoader:
         self._data: np.ndarray = np.array([])
         self._load_audio()
 
-    
+
     def _load_audio(self):
         """
         Function for loading audio files, supporting both WAV and MP3.
@@ -52,7 +52,7 @@ class FileLoader:
             The sample rate, calculated in previous function.
         """
         return self._sample_rate
-    
+
     def get_data(self) -> np.ndarray:
         """
         Returns the floating pount time series of audio files     

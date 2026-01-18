@@ -6,12 +6,10 @@ from load_file import FileLoader
 from data_exploration import DataExploration
 from fir_filter import FIRFilter
 
-
-"""
-Class for structuring the audio files into a dataset, preparing for the pipeline.
-"""
 class DatasetLoader:
-
+    """
+    Class for structuring the audio files into a dataset, preparing for the pipeline.
+    """
     def __init__(self, root_dir: str):
         """
         Initializes the class. 
@@ -88,4 +86,3 @@ class DatasetLoader:
 
         df = pd.DataFrame.from_records(records)
         return df
-    

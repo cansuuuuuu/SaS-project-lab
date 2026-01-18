@@ -1,15 +1,14 @@
-import numpy as np
 from typing import Dict
+import numpy as np
 
 from spectral_analysis import SpectralAnalysis
 
-"""
-Class for exploring the data. 
-Here we get the root mean square, crest factor, standard deviation, 
-average amplitude and minimum/maximum amplitude of the data. 
-"""
 class DataExploration:
-
+    """
+    Class for exploring the data. 
+    Here we get the root mean square, crest factor, standard deviation, 
+    average amplitude and minimum/maximum amplitude of the data. 
+    """
     def __init__(self):
         self.spectral_analyzer = SpectralAnalysis()
 
@@ -68,7 +67,7 @@ class DataExploration:
             signal (np,ndarray): The signal data extracted from the file
         
         Returns:
-            min_max (tuple with floats): tuple with the minimum and maximum amplitudes of the signal.
+            min_max (tuple with floats): tuple with the minimum and maximum amplitudes of the signal
         """
         min_max = float(np.min(signal)), float(np.max(signal))
         return min_max
@@ -121,7 +120,7 @@ class DataExploration:
             "max_amplitude": max_amp,
             "crest_factor": crest,
         }
-        
+
         spectral_feats = self.spectral_analyzer.spectral_analysis(signal, fs)
         explored_data.update(spectral_feats)
 

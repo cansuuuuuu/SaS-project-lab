@@ -1,20 +1,19 @@
-from fast_fourier_transform import FastFourierTransform
-import numpy as np
 from typing import Dict
+import numpy as np
+from fast_fourier_transform import FastFourierTransform
 
-"""
-Class containing the various method of spectral analysis for a discrete time series.
-"""
 class SpectralAnalysis:
-
+    """
+    Class containing the various method of spectral analysis for a discrete time series.
+    """
     def __init__(self):
         self.fft_tool = FastFourierTransform()
 
     def _welch(self, data: np.ndarray, frame_length: int, frame_overlap: int) -> np.ndarray:
         """
-        A calculation of the power spectral density of a time series. It works using welch's method, averaging out the
-        frequency domain representation of overlapping frames of the time series. Each frame has the Hann window applied
-        to it to avoid artifacts.
+        A calculation of the power spectral density of a time series. It works using welch's 
+        method, averaging out the frequency domain representation of overlapping frames of the time 
+        series. Each frame has the Hann window applied to it to avoid artifacts.
         :param data (numpy ndarray): discrete time series
         :param frame_length (int): number of samples used in each frame
         :param frame_overlap (int): number of samples that overlap between frames
@@ -42,8 +41,9 @@ class SpectralAnalysis:
     @staticmethod
     def _spectrogram(data : np.ndarray, frame_length : int, frame_overlap : int) -> np.ndarray:
         """
-        Method to draw a spectrogram, it takes the input discrete time series, applies a fft to different
-        overlapping frames, with the Hanning window applied to them, puts them all into a 2d numpy ndarray.
+        Method to draw a spectrogram, it takes the input discrete time series, applies a fft 
+        to different overlapping frames, with the Hanning window applied to them, puts them all 
+        into a 2d numpy ndarray.
         :param data: discrete time series
         :param frame_length: number of samples used in each frame
         :param frame_overlap: number of samples that overlap between frames
@@ -62,11 +62,17 @@ class SpectralAnalysis:
         for i in range(nb_steps):
             frame = padded_data[i * step: frame_length + i * step]
             windowed_frame = frame * np.hanning(frame_length)
-            fft_frame = FastFourierTransform.fft(data = windowed_frame)
+            fft_frame = FastFourierTransform.fft(self, data = windowed_frame)
             spectrogram[:, i] = fft_frame
         return spectrogram
 
-    def spectral_analysis(self, data: np.ndarray, fs: int, frame_length: int = 2048, frame_overlap: int = 1024) -> Dict[str, float]:
+    def spectral_analysis(
+            self,
+            data: np.ndarray,
+            fs: int,
+            frame_length: int = 2048,
+            frame_overlap: int = 1024
+        ) -> Dict[str, float]:
         """
         Calculates various spectral qualities of the time series.
         :param data: discrete time series
@@ -83,12 +89,12 @@ class SpectralAnalysis:
         freqs = np.linspace(0, fs / 2, half_n)
         psd_half = psd[:half_n]
         psd_max_freq = float(freqs[np.argmax(psd_half)])
-        
+
         if np.sum(psd_half) == 0:
             spectral_centroid = 0.0
         else:
             spectral_centroid = float(np.sum(freqs * psd_half) / np.sum(psd_half))
-            
+
         return {
             "psd_mean": psd_mean,
             "psd_max_freq": psd_max_freq,
