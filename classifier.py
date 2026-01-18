@@ -28,6 +28,6 @@ class BirdClassifier:
             raise ValueError("Fit first!")
         x_scaled = self.scaler.transform(x)
         explainer = shap.TreeExplainer(self.model)
-        shap_values = explainer.shap_values(x_scaled)
-        shap.summary_plot(shap_values, x_scaled, x, feature_names=self.feature_names, show=False)
+        shap_values = explainer(x_scaled)
+        shap.summary_plot(shap_values, x_scaled, plot_type="bar")
         return shap_values
